@@ -1,0 +1,357 @@
+:root {
+    --bg-color: #0b0c10;
+    --card-bg: rgba(31, 40, 51, 0.6);
+    --border-color: rgba(102, 252, 241, 0.2);
+    --neon-cyan: #66fcf1;
+    --neon-cyan-dim: #45a29e;
+    --neon-purple: #c77dff;
+    --text-main: #c5c6c7;
+    --text-light: #ffffff;
+    --danger: #ff4b4b;
+    --font-main: 'Inter', sans-serif;
+    --font-mono: 'Fira Code', monospace;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: var(--font-main);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Background Blobs for Glassmorphism */
+.background-elements {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.blob {
+    position: absolute;
+    filter: blur(80px);
+    opacity: 0.5;
+}
+
+.blob-1 {
+    top: -100px;
+    left: -100px;
+    width: 400px;
+    height: 400px;
+    background: var(--neon-cyan);
+    border-radius: 50%;
+}
+
+.blob-2 {
+    bottom: -150px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    background: var(--neon-purple);
+    border-radius: 50%;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+header h1 {
+    font-size: 3rem;
+    color: var(--text-light);
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.neon-text {
+    color: var(--neon-cyan);
+    text-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 2rem;
+}
+
+@media (max-width: 900px) {
+    .grid-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+.left-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Glassmorphism Cards */
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    border-color: rgba(102, 252, 241, 0.4);
+}
+
+.card.full-height {
+    height: 100%;
+}
+
+h2 {
+    color: var(--text-light);
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+
+/* Form Elements */
+.input-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+    color: var(--text-main);
+}
+
+input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 8px rgba(102, 252, 241, 0.2);
+}
+
+input[readonly] {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.balance-display {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--neon-purple);
+    font-family: var(--font-mono);
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    width: 100%;
+    padding: 0.75rem;
+    background: transparent;
+    border: 1px solid var(--neon-cyan-dim);
+    color: var(--neon-cyan);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+    font-family: var(--font-main);
+}
+
+.btn:hover {
+    background: rgba(102, 252, 241, 0.1);
+    transform: translateY(-1px);
+}
+
+.btn.primary {
+    background: var(--neon-cyan-dim);
+    color: #000;
+    border: none;
+}
+
+.btn.primary:hover {
+    background: var(--neon-cyan);
+    box-shadow: 0 0 15px rgba(102, 252, 241, 0.5);
+}
+
+.btn.glow {
+    animation: pulse 2s infinite;
+}
+
+.btn.danger {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+.btn.danger:hover {
+    background: rgba(255, 75, 75, 0.1);
+}
+
+.flex-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(102, 252, 241, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(102, 252, 241, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(102, 252, 241, 0); }
+}
+
+/* Status */
+.status-indicator {
+    margin-top: 1rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.status-valid {
+    color: #50fa7b;
+    background: rgba(80, 250, 123, 0.1);
+}
+
+.status-invalid {
+    color: #ff5555;
+    background: rgba(255, 85, 85, 0.1);
+}
+
+/* Blockchain Explorer */
+.chain-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-height: 800px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.chain-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chain-container::-webkit-scrollbar-thumb {
+    background: rgba(102, 252, 241, 0.3);
+    border-radius: 3px;
+}
+
+.block-card {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 1rem;
+    position: relative;
+}
+
+.block-card:not(:first-child)::before {
+    content: '';
+    position: absolute;
+    top: -1.5rem;
+    left: 50%;
+    height: 1.5rem;
+    width: 2px;
+    background: var(--neon-cyan-dim);
+}
+
+.block-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+.block-index {
+    font-weight: 800;
+    color: var(--text-light);
+}
+
+.block-time {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.hash-row {
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+}
+
+.hash-label {
+    display: inline-block;
+    width: 100px;
+    color: #888;
+}
+
+.hash-value {
+    font-family: var(--font-mono);
+    color: var(--neon-cyan);
+    word-break: break-all;
+}
+
+.prev-hash-value {
+    font-family: var(--font-mono);
+    color: var(--neon-purple);
+    word-break: break-all;
+}
+
+.tx-container {
+    margin-top: 1rem;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+}
+
+.tx-header {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-light);
+}
+
+.tx-item {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+}
+
+.tx-item strong {
+    color: #50fa7b;
+}
