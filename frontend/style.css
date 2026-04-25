@@ -225,6 +225,67 @@ input[readonly] { opacity: 0.7; cursor: not-allowed; }
     transition: color 0.4s ease;
 }
 
+/* ── Copy Button ─────────────────────────────────────────────── */
+.btn-copy {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+    border-radius: 8px;
+    padding: 0 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-copy:hover {
+    background: rgba(102, 252, 241, 0.1);
+    border-color: var(--neon-cyan);
+    color: var(--neon-cyan);
+}
+
+.btn-copy:active {
+    transform: scale(0.9);
+}
+
+/* ── Mempool List ───────────────────────────────────────────── */
+.mempool-list {
+    margin: 1rem 0;
+    max-height: 150px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-right: 0.25rem;
+}
+
+.mempool-list:empty {
+    display: none;
+}
+
+.mempool-item {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 6px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    display: flex;
+    justify-content: space-between;
+}
+
+.mempool-item .amount {
+    color: var(--neon-cyan);
+    font-weight: 600;
+}
+
+.mempool-list::-webkit-scrollbar { width: 4px; }
+.mempool-list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
 /* ── Buttons ──────────────────────────────────────────────────── */
 .btn {
     display: inline-block;

@@ -10,6 +10,8 @@ const els = {
   generateWalletBtn: document.getElementById('generateWalletBtn'),
   publicKey:         document.getElementById('publicKey'),
   privateKey:        document.getElementById('privateKey'),
+  copyPublicBtn:     document.getElementById('copyPublicBtn'),
+  copyPrivateBtn:    document.getElementById('copyPrivateBtn'),
   walletBalance:     document.getElementById('walletBalance'),
 
   // Transaction
@@ -20,6 +22,7 @@ const els = {
 
   // Mining
   pendingCount:     document.getElementById('pendingCount'),
+  mempoolList:      document.getElementById('mempoolList'),
   mineRewardAddress: document.getElementById('mineRewardAddress'),
   mineBtn:          document.getElementById('mineBtn'),
 
@@ -83,6 +86,20 @@ els.validateBtn.addEventListener('click', validateChain);
 els.tamperBtn.addEventListener('click', tamperBlock);
 els.resetBtn.addEventListener('click', resetBlockchain);
 els.historyBtn.addEventListener('click', searchHistory);
+
+// Copy listeners
+els.copyPublicBtn.addEventListener('click', () => copyToClipboard(els.publicKey.value, 'Address'));
+els.copyPrivateBtn.addEventListener('click', () => copyToClipboard(els.privateKey.value, 'Private Key'));
+
+async function copyToClipboard(text, label) {
+  if (!text) return;
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast(`${label} copied to clipboard!`, 'info');
+  } catch (err) {
+    showToast('Failed to copy', 'error');
+  }
+}
 
 // ── Initial Load ──────────────────────────────────────────────
 fetchNetworkInfo();
@@ -275,6 +292,23 @@ async function fetchPending() {
     const res = await fetch(`${API_BASE}/pending`);
     const pending = await res.json();
     els.pendingCount.textContent = pending.length;
+
+    // Render mempool list
+    if (pending.length === 0) {
+      els.mempoolList.innerHTML = '';
+      return;
+    }
+
+    els.mempoolList.innerHTML = pending.map(tx => {
+      const from = tx.fromAddress ? tx.fromAddress.substring(0, 8) + '...' : 'System';
+      const to = tx.toAddress.substring(0, 8) + '...';
+      return `
+        <div class="mempool-item">
+          <span>${from} → ${to}</span>
+          <span class="amount">${tx.amount} MC</span>
+        </div>
+      `;
+    }).join('');
   } catch (e) {
     console.error(e);
   }
@@ -381,12 +415,13 @@ async function searchHistory() {
         ? (tx.to.substring(0, 12) + '...')
         : (tx.from ? tx.from.substring(0, 12) + '...' : 'System');
       const sign = tx.type === 'sent' ? '-' : '+';
+      const date = new Date(tx.timestamp).toLocaleString();
 
       return `
         <div class="history-item ${tx.type}">
-          <div>
-            <div>${tx.type === 'sent' ? '↗ Sent to' : '↙ Received from'} ${counterparty}</div>
-            <div class="history-meta">Block #${tx.blockIndex}</div>
+          <div style="flex: 1">
+            <div style="font-weight: 600">${tx.type === 'sent' ? '↗ Sent to' : '↙ Received from'} ${counterparty}</div>
+            <div class="history-meta">Block #${tx.blockIndex} • ${date}</div>
           </div>
           <div class="history-amount ${tx.type}">${sign}${tx.amount} MC</div>
         </div>

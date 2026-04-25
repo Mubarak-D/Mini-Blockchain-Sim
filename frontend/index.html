@@ -54,11 +54,17 @@
                     <button id="generateWalletBtn" class="btn primary">Generate Key Pair</button>
                     <div class="input-group">
                         <label>Public Key (Address)</label>
-                        <input type="text" id="publicKey" readonly placeholder="Click generate...">
+                        <div class="input-with-btn">
+                            <input type="text" id="publicKey" readonly placeholder="Click generate...">
+                            <button class="btn-copy" id="copyPublicBtn" title="Copy Address">📋</button>
+                        </div>
                     </div>
                     <div class="input-group">
                         <label>Private Key</label>
-                        <input type="password" id="privateKey" readonly placeholder="Click generate...">
+                        <div class="input-with-btn">
+                            <input type="password" id="privateKey" readonly placeholder="Click generate...">
+                            <button class="btn-copy" id="copyPrivateBtn" title="Copy Private Key">📋</button>
+                        </div>
                     </div>
                     <div class="input-group">
                         <label>Balance</label>
@@ -88,6 +94,7 @@
                 <section class="card glass" id="miningCard">
                     <h2>⛏️ Mempool & Miner</h2>
                     <p>Pending Transactions: <span id="pendingCount" class="neon-text">0</span></p>
+                    <div id="mempoolList" class="mempool-list"></div>
                     <div class="input-group">
                         <label>Miner Reward Address</label>
                         <input type="text" id="mineRewardAddress" placeholder="Your public key">
