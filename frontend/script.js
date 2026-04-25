@@ -151,7 +151,8 @@ async function sendTransaction() {
   const tx = {
     fromAddress: els.txFrom.value,
     toAddress:   els.txTo.value,
-    amount:      els.txAmount.value
+    amount:      els.txAmount.value,
+    privateKey:  wallet.private // Include the private key for backend signing
   };
 
   if (!tx.fromAddress || !tx.toAddress || !tx.amount) {
