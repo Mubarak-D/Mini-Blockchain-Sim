@@ -19,6 +19,17 @@ class Transaction {
     this.amount = amount;
     this.timestamp = Date.now();
   }
+
+  /**
+   * calculateHash - Returns a SHA-256 hash of the transaction data.
+   * This hash is what will be signed by the sender's private key.
+   */
+  calculateHash() {
+    return crypto
+      .createHash('sha256')
+      .update(this.fromAddress + this.toAddress + this.amount + this.timestamp)
+      .digest('hex');
+  }
 }
 
 module.exports = Transaction;
