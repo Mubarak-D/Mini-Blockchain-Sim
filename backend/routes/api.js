@@ -60,9 +60,15 @@ module.exports = function(blockchain) {
 
   /** POST /api/transaction — Submits a new transaction to the mempool */
   router.post('/transaction', (req, res) => {
-    const { fromAddress, toAddress, amount } = req.body;
+    const { fromAddress, toAddress, amount, privateKey } = req.body;
     try {
       const tx = new Transaction(fromAddress, toAddress, parseFloat(amount));
+      
+      // Sign the transaction before adding it to the blockchain
+      if (fromAddress) {
+        tx.signTransaction(privateKey);
+      }
+
       blockchain.addTransaction(tx);
       res.json({ message: 'Transaction added to pending pool successfully', transaction: tx });
     } catch (e) {
