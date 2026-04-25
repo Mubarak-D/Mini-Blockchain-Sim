@@ -73,6 +73,12 @@ class Blockchain {
     if (transaction.amount <= 0) {
       throw new Error('Transaction amount should be higher than 0');
     }
+    
+    // Ensure the transaction is signed
+    if (!transaction.isValid()) {
+      throw new Error('Cannot add invalid transaction to chain (unsigned)');
+    }
+
     this.pendingTransactions.push(transaction);
   }
 
