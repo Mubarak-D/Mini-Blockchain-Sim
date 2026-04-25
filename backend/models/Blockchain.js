@@ -79,6 +79,12 @@ class Blockchain {
       throw new Error('Cannot add invalid transaction to chain (unsigned)');
     }
 
+    // Ensure sender has enough balance
+    const senderBalance = this.getBalanceOfAddress(transaction.fromAddress);
+    if (senderBalance < transaction.amount) {
+      throw new Error('Insufficient balance to perform transaction');
+    }
+
     this.pendingTransactions.push(transaction);
   }
 
